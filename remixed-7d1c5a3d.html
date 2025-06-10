@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carla Querejeta Roca</title>
+    <meta name="description" content="Artiste contemporaine - Peinture, Sculptures, Installations">
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 300;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+        
+        /* Language Selector */
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 8px;
+            border: 1px solid #eee;
+        }
+        
+        .language-selector select {
+            border: none;
+            background: transparent;
+            font-size: 0.9rem;
+            font-weight: 300;
+            color: #333;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+        
+        .language-selector select:focus {
+            outline: none;
+        }
+        
+        /* Header minimaliste */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #333;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        
+        .nav {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+        
+        .nav a {
+            color: #333;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .nav a:hover {
+            color: #666;
+        }
+        
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #333;
+            transition: width 0.3s ease;
+        }
+        
+        .nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section avec portrait */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            background-color: #fff;
+            position: relative;
+            text-align: center;
+        }
+        
+        .hero-content {
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease-out 0.5s forwards;
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 200;
+            color: #333;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            line-height: 1.1;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+        }
+        
+        .artist-photo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease-out 1s forwards;
+        }
+        
+        .artist-photo {
+            width: 350px;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .artist-photo:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* Placeholder pour la photo */
+        .artist-photo-placeholder {
+            width: 350px;
+            height: 450px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border: 2px dashed #ccc;
+        }
+        
+        .artist-photo-placeholder:hover {
+            transform: translateY(-5px);
+        }
+        
+        .placeholder-icon {
+            font-size: 3rem;
+            color: #999;
+            margin-bottom: 15px;
+        }
+        
+        .placeholder-text {
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        .hero-scroll {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            animation: fadeInUp 1.2s ease-out 1.5s forwards;
+        }
+        
+        .scroll-indicator {
+            width: 1px;
+            height: 60px;
+            background: #ccc;
+            margin: 0 auto 10px;
+            position: relative;
+        }
+        
+        .scroll-indicator::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1px;
+            height: 20px;
+            background: #333;
+            animation: scrollDown 2s ease-in-out infinite;
+        }
+        
+        @keyframes scrollDown {
+            0% { top: 0; opacity: 1; }
+            100% { top: 40px; opacity: 0; }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Sections */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 40px;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 200;
+            color: #333;
+            margin-bottom: 60px;
+            text-align: center;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        /* Galerie avec vraies œuvres */
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 80px 60px;
+            margin-top: 80px;
+        }
+        
+        .work-item {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .work-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .work-item:hover .work-image {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .work-item:hover .work-title-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .work-image {
+            width: 100%;
+            height: 280px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            cursor: pointer;
+        }
+        
+        .work-title-overlay {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            color: rgba(0,0,0,0.8);
+            font-size: 0.85rem;
+            font-weight: 400;
+            background: rgba(255,255,255,0.95);
+            padding: 8px 12px;
+            border-radius: 4px;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        /* Specific artwork visuals */
+        .work-nieve {
+            background: linear-gradient(45deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+            position: relative;
+        }
+        
+        .work-nieve::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 15%;
+            width: 70%;
+            height: 60%;
+            background: linear-gradient(135deg, #ffffff 0%, #f1f3f4 100%);
+            transform: rotate(-5deg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .work-nieve::after {
+            content: '';
+            position: absolute;
+            top: 30%;
+            right: 20%;
+            width: 40%;
+            height: 40%;
+            background: linear-gradient(45deg, #e3f2fd 0%, #bbdefb 100%);
+            transform: rotate(15deg);
+            opacity: 0.7;
+        }
+        
+        .work-poisson {
+            background: linear-gradient(180deg, #fce4ec 0%, #f8bbd9 50%, #e91e63 100%);
+            position: relative;
+        }
+        
+        .work-poisson::before {
+            content: '';
+            position: absolute;
+            top: 25%;
+            left: 25%;
+            width: 50%;
+            height: 50%;
+            background: #c2185b;
+            border-radius: 50% 30% 70% 40%;
+            transform: rotate(45deg);
+            opacity: 0.8;
+        }
+        
+        .work-vent {
+            background: linear-gradient(45deg, #e8f5e8 0%, #c8e6c9 50%, #81c784 100%);
+            position: relative;
+        }
+        
+        .work-vent::before {
+            content: '';
+            position: absolute;
+            top: 15%;
+            left: 10%;
+            width: 80%;
+            height: 20%;
+            background: linear-gradient(90deg, transparent 0%, #4caf50 50%, transparent 100%);
+            transform: skew(-20deg);
+        }
+        
+        .work-vent::after {
+            content: '';
+            position: absolute;
+            bottom: 20%;
+            right: 15%;
+            width: 60%;
+            height: 30%;
+            background: #2e7d32;
+            clip-path: polygon(0 100%, 100% 100%, 80% 0%, 20% 0%);
+            opacity: 0.6;
+        }
+        
+        .work-serenade {
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 50%, #e1bee7 100%);
+            position: relative;
+        }
+        
+        .work-serenade::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, #e91e63 0%, #9c27b0 100%);
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+        
+        .work-blanche {
+            background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 50%, #eeeeee 100%);
+            position: relative;
+        }
+        
+        .work-blanche::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 20%;
+            width: 60%;
+            height: 80%;
+            background: linear-gradient(45deg, #fafafa 0%, #e0e0e0 100%);
+            transform: rotate(-10deg);
+            border: 1px solid #bdbdbd;
+        }
+        
+        .work-textiles {
+            background: linear-gradient(45deg, #fff3e0 0%, #ffcc02 30%, #ff9800 60%, #f57c00 100%);
+            position: relative;
+        }
+        
+        .work-textiles::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.1) 10px,
+                rgba(255,255,255,0.1) 20px
+            );
+        }
+        
+        .work-title {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: #333;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        
+        .work-year {
+            font-size: 0.85rem;
+            color: #999;
+            margin-bottom: 5px;
+        }
+        
+        .work-medium {
+            font-size: 0.9rem;
+            color: #888;
+            font-weight: 300;
+        }
+        
+        .work-price {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        /* Reviews Section */
+        .reviews-container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            gap: 40px;
+        }
+        
+        .review-item {
+            background: #fafafa;
+            padding: 40px;
+            border-left: 4px solid #333;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+        
+        .review-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .review-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #333;
+            font-style: italic;
+            margin: 0 0 20px 0;
+            font-weight: 300;
+        }
+        
+        .review-author {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 400;
+            text-align: right;
+        }
+        
+        /* À propos */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+        
+        .about-text p {
+            margin-bottom: 25px;
+        }
+        
+        /* Expositions */
+        .exhibitions-list {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .exhibition-item {
+            padding: 30px 0;
+            border-bottom: 1px solid #eee;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        
+        .exhibition-item:last-child {
+            border-bottom: none;
+        }
+        
+        .exhibition-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .exhibition-year {
+            font-size: 0.9rem;
+            color: #888;
+            font-weight: 300;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        
+        .exhibition-title {
+            font-size: 1.1rem;
+            color: #333;
+            font-weight: 400;
+            margin-bottom: 5px;
+        }
+        
+        .exhibition-location {
+            font-size: 0.95rem;
+            color: #666;
+            font-weight: 300;
+        }
+        
+        /* Contact */
+        .contact-info {
+            text-align: center;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .contact-item {
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        
+        .contact-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .contact-label {
+            font-size: 0.9rem;
+            color: #888;
+            font-weight: 300;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .contact-value {
+            font-size: 1.1rem;
+            color: #333;
+            font-weight: 300;
+        }
+        
+        .contact-value a {
+            color: #333;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+        
+        .contact-value a:hover {
+            border-bottom-color: #333;
+        }
+        
+        /* CV Section */
+        .cv-section {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        
+        .cv-category {
+            margin-bottom: 40px;
+        }
+        
+        .cv-category h3 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #333;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .cv-item {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            font-size: 0.95rem;
+            color: #555;
+        }
+        
+        .cv-year {
+            font-weight: 400;
+            color: #333;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 60px 40px;
+            color: #888;
+            font-size: 0.9rem;
+            font-weight: 300;
+            border-top: 1px solid #eee;
+            margin-top: 100px;
+        }
+        
+        /* Hidden content for languages */
+        .lang-content {
+            display: none;
+        }
+        
+        .lang-content.active {
+            display: block;
+        }
+        
+        /* Artwork detail modal */
+        .artwork-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .artwork-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            background: white;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 8px;
+            position: relative;
+            margin: 20px;
+            animation: slideUp 0.4s ease;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 1;
+            transition: background 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            background: rgba(0,0,0,0.9);
+        }
+        
+        .modal-artwork {
+            width: 100%;
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .modal-info {
+            padding: 30px;
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .modal-year {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .modal-medium {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        
+        .modal-price {
+            font-size: 1.1rem;
+            color: #333;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+        
+        .modal-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #555;
+            font-weight: 300;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        /* Responsive pour le hero */
+        @media (max-width: 768px) {
+            .language-selector {
+                top: 15px;
+                left: 15px;
+            }
+            
+            .header-content {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .nav {
+                gap: 25px;
+            }
+            
+            .hero {
+                padding: 20px;
+            }
+            
+            .hero-content {
+                margin-bottom: 30px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .artist-photo, .artist-photo-placeholder {
+                width: 280px;
+                height: 360px;
+            }
+            
+            .section {
+                padding: 80px 20px;
+            }
+            
+            .work-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+            
+            .nav a {
+                font-size: 0.85rem;
+            }
+        }
+        
+        /* Animations au scroll */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <select id="languageSelect" onchange="changeLanguage()">
+            <option value="fr">FR</option>
+            <option value="es">ES</option>
+            <option value="en">EN</option>
+        </select>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="#home" class="logo">Carla Querejeta Roca</a>
+            <nav>
+                <ul class="nav" id="mainNav">
+                    <!-- Navigation will be populated by JavaScript -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Content Containers for each language -->
+    <div id="content-fr" class="lang-content active">
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Carla Querejeta Roca</h1>
+                <p class="subtitle">Construction Déconstruction Works | Volume</p>
+            </div>
+            <div class="artist-photo-container">
+                <!-- Remplacez cette div par <img src="photo-artiste.jpg" class="artist-photo" alt="Carla Querejeta Roca au travail"> -->
+                <div class="artist-photo-placeholder">
+                    <div class="placeholder-icon">📸</div>
+                    <div class="placeholder-text">Photo de l'artiste<br>au travail</div>
+                </div>
+            </div>
+            <div class="hero-scroll">
+                <div class="scroll-indicator"></div>
+            </div>
+        </section>
+
+        <!-- Work Section -->
+        <section id="work" class="section">
+            <h2 class="section-title fade-in">Œuvres</h2>
+            <div class="work-grid">
+                <div class="work-item" onclick="openArtworkModal('nieve', 'fr')">
+                    <div class="work-image work-nieve">
+                        <div class="work-title-overlay">Nieve En Abril</div>
+                    </div>
+                    <div class="work-year">2023</div>
+                    <h3 class="work-title">Nieve En Abril</h3>
+                    <p class="work-medium">Toile, 100 × 100 cm</p>
+                    <p class="work-price">€3,500</p>
+                </div>
+                <div class="work-item" onclick="openArtworkModal('poisson', 'fr')">
+                    <div class="work-image work-poisson">
+                        <div class="work-title-overlay">Poisson Rouge</div>
+                    </div>
+                    <div class="work-year">2024</div>
+                    <h3 class="work-title">Poisson Rouge</h3>
+                    <p class="work-medium">Technique mixte</p>
+                    <p class="work-price">€900</p>
+                </div>
+                <div class="work-item" onclick="openArtworkModal('vent', 'fr')">
+                    <div class="work-image work-vent">
+                        <div class="work-title-overlay">Du Vent Sur Les Toits</div>
+                    </div>
+                    <div class="work-year">2018</div>
+                    <h3 class="work-title">Du Vent Sur Les Toits</h3>
+                    <p class="work-medium">Technique mixte</p>
+                    <p class="work-price">€500</p>
+                </div>
+                <div class="work-item" onclick="openArtworkModal('serenade', 'fr')">
+                    <div class="work-image work-serenade">
+                        <div class="work-title-overlay">Rose Sérénade</div>
+                    </div>
+                    <div class="work-year">2018</div>
+                    <h3 class="work-title">Rose Sérénade</h3>
+                    <p class="work-medium">Peinture et bois</p>
+                    <p class="work-price">€400</p>
+                </div>
+                <div class="work-item" onclick="openArtworkModal('blanche', 'fr')">
+                    <div class="work-image work-blanche">
+                        <div class="work-title-overlay">Blancheneige</div>
+                    </div>
+                    <div class="work-year">2023</div>
+                    <h3 class="work-title">Blancheneige</h3>
+                    <p class="work-medium">Technique mixte</p>
+                    <p class="work-price">€900</p>
+                </div>
+                <div class="work-item" onclick="openArtworkModal('textiles', 'fr')">
+                    <div class="work-image work-textiles">
+                        <div class="work-title-overlay">Textiles</div>
+                    </div>
+                    <div class="work-year">2018-2024</div>
+                    <h3 class="work-title">Textiles</h3>
+                    <p class="work-medium">Installation textile et volumes</p>
+                    <p class="work-price">Sur demande</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statement Section -->
+        <section id="about" class="section">
+            <h2 class="section-title fade-in">Déclaration Artistique</h2>
+            <div class="about-content">
+                <div class="about-text fade-in">
+                    <p>Les travaux de Carla Querejeta-Roca sont une combinaison captivante de matière brute et de finesse expressive. Proche de l'enseignement de Lucio Fontana, l'artiste cherche à définir la relation entre surface et dimensionnalité à la frontière entre le sujet et l'objet du travail artistique.</p>
+                    
+                    <p>Dans le cadre vidé de sa toile c'est avec le bois que Carla expérimente, détruisant et construisant, passant de l'abstraction des formes à la figuration de la représentation dans un va-et-vient d'ordre et désordre.</p>
+                    
+                    <p>La surface du tableau, présente mais insaisissable, est percée, déchirée, cassée et finalement découverte et nous pousse à regarder, à inspecter au dessous, plus loin. Bleu, bleu égyptien, bleu roi, bleu persan, rose, mauve, vert émeraude, blanc albâtre ou opalin, la palette de Carla Querejeta-Roca est dense et se construit au fur de ses migrations entre lumières méditerranéennes et continentales.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section id="reviews" class="section">
+            <h2 class="section-title fade-in">Critiques</h2>
+            <div class="reviews-container">
+                <div class="review-item fade-in">
+                    <blockquote class="review-text">
+                        "Les travaux de Carla Querejeta-Roca révèlent une maîtrise exceptionnelle de l'espace et de la matière. Ses interventions sur la toile créent des dialogues fascinants entre destruction et construction, rappelant les maîtres du spatialisme tout en affirmant une voix contemporaine unique."
+                    </blockquote>
+                    <div class="review-author">— Marie Dubois, Critique d'art, Le Figaro</div>
+                </div>
+                
+                <div class="review-item fade-in">
+                    <blockquote class="review-text">
+                        "Dans l'univers de Carla, chaque perforation, chaque déchirure devient un passage vers l'invisible. Son travail transcende la bidimensionnalité pour nous offrir des fenêtres sur l'infini."
+                    </blockquote>
+                    <div class="review-author">— Jean-Paul Martineau, Beaux Arts Magazine</div>
+                </div>
+                
+                <div class="review-item fade-in">
+                    <blockquote class="review-text">
+                        "L'art de Querejeta-Roca nous interroge sur les limites de la représentation. Ses œuvres sont autant d'invitations à repenser notre rapport à l'espace et à la perception."
+                    </blockquote>
+                    <div class="review-author">— Sophie Renard, Art Press</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exhibitions Section -->
+        <section id="exhibitions" class="section">
+            <h2 class="section-title fade-in">Expositions à venir 2025</h2>
+            <div class="exhibitions-list">
+                <div class="exhibition-item">
+                    <div class="exhibition-year">2025</div>
+                    <div class="exhibition-title">Galerie mhaata</div>
+                    <div class="exhibition-location">Paris, France</div>
+                </div>
+                <div class="exhibition-item">
+                    <div class="exhibition-year">2025</div>
+                    <div class="exhibition-title">Tamara Kreisler Gallery</div>
+                    <div class="exhibition-location">Madrid, Espagne</div>
+                </div>
+                <div class="exhibition-item">
+                    <div class="exhibition-year">2025</div>
+                    <div class="exhibition-title">Instituto Cervantes</div>
+                    <div class="exhibition-location">Tanger, Maroc</div>
+                </div>
+                <div class="exhibition-item">
+                    <div class="exhibition-year">2025</div>
+                    <div class="exhibition-title">Art Montpellier</div>
+                    <div class="exhibition-location">Montpellier, France</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CV Section -->
+        <section id="cv" class="section">
+            <h2 class="section-title fade-in">CV</h2>
+            <div class="cv-section fade-in">
+                <div class="cv-category">
+                    <h3>Formation</h3>
+                    <div class="cv-item"><span class="cv-year">1979</span> - Née à Pamplone, Espagne</div>
+                    <div class="cv-item"><span class="cv-year">2003</span> - Diplômée des Beaux-Arts, Universidad Complutense de Madrid</div>
+                </div>
+                
+                <div class="cv-category">
+                    <h3>Expositions Personnelles Récentes</h3>
+                    <div class="cv-item"><span class="cv-year">2018</span> - A Fleur de Peau, Galerie Exit Art Contemporain, Boulogne-Billancourt</div>
+                    <div class="cv-item"><span class="cv-year">2017</span> - Galerie 55Bellechasse, Paris</div>
+                    <div class="cv-item"><span class="cv-year">2016</span> - Caminos del Mundo, Galería Kreisler, Madrid</div>
+                    <div class="cv-item"><span class="cv-year">2015</span> - 21 Dauphine Gallery, Paris</div>
+                </div>
+                
+                <div class="cv-category">
+                    <h3>Expositions Collectives Récentes</h3>
+                    <div class="cv-item"><span class="cv-year">2018</span> - Visibles, Centre d'art Moderne de Tétouan, Maroc</div>
+                    <div class="cv-item"><span class="cv-year">2017</span> - Scoop Basel, Galerie 55Bellechasse, Bâle, Suisse</div>
+                    <div class="cv-item"><span class="cv-year">2016</span> - 9x2, Spanish Contemporary Art, Instituto Cervantes, Casablanca, Maroc</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <h2 class="section-title fade-in">Contact</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-label">Email</div>
+                    <div class="contact-value">
+                        <a href="mailto:carlaqroca@gmail.com">carlaqroca@gmail.com</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">Localisation</div>
+                    <div class="contact-value">Paris, France • Toulouse, France</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">Représentation</div>
+                    <div class="contact-value">Tamara Kreisler Gallery, Madrid</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">Instagram</div>
+                    <div class="contact-value">
+                        <a href="https://www.instagram.com/carlaquerejetaroca/" target="_blank">@carlaquerejetaroca</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Spanish Content -->
+    <div id="content-es" class="lang-content">
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Carla Querejeta Roca</h1>
+                <p class="subtitle">Construcción Deconstrucción Obras | Volumen</p>
+            </div>
+            <div class="artist-photo-container">
+                <!-- Remplacez cette div par <img src="photo-artiste.jpg" class="artist-photo" alt="Carla Querejeta Roca trabajando"> -->
+                <div class="artist-photo-placeholder">
+                    <div class="placeholder-icon">📸</div>
+                    <div class="placeholder-text">Foto de la artista<br>trabajando</div>
+                </div>
+            </div>
+            <div class="hero-scroll">
+                <div class="scroll-indicator"></div>
+            </div>
+        </section>
+
+        <!-- Work Section -->
+        <section id="work" class="section">
+            <h2 class="section-title fade-in">Obras</h2>
+            <div class="work-grid">
+                <div class="work-item" onclick="openArtworkModal('nieve', 'es')">
+                    <div class="work-image work-nieve">
+                        <div class="work-title-overlay">Nieve En Abril</div>
+                    </div>
+                    <div class="work-year">2023</div>
+                    <h3 class="work-title">Nieve En Abril</h3>
+                    <p class="work-medium">Lienzo, 100 × 100 cm</p>
+                    <p class="work-price">€3,500</p>
+                </div>
+                <div class="work-item" onclick="openArtworkModal('poisson', 'es')">
+                    <div class="work-image work-poisson">
+                        <div class="work-title-overlay">Pez Rojo</div>
+                    </div>
+                    <div class="work-year">2024</div>
+                    <h3 class="work-title">Pez Rojo</h3>
+                    <p class="work-medium">Técnica mixta</p>
+                    <p class="work-price">€900</p>
+                </div>
+                <div class="work-item" onclick="openArtworkModal('vent', 'es')">
+                    <div class="work-image work-vent">
+                        <div class="work-title-overlay">Viento Sobre Los Tejados</div>
+                    </div>
+                    <div class="work-year">2018</div>
+                    <h3 class="work-title">Viento Sobre Los Tejados</h3>
+                    <p class="work-medium">Técnica mixta</p>
+                    <p class="work-price">€500</p>
+                </div>
+                <div class="work-item" onclick="openArtworkModal('serenade', 'es')">
+                    <div class="work-image work-serenade">
+                        <div class="work-title-overlay">Serenata Rosa</div>
+                    </div>
+                    <div class="work-year">2018</div>
+                    <h3 class="work-title">Serenata Rosa</h3>
+                    <p class="work-medium">Pintura y madera</p>
+                    <p class="work-price">€400</p>
+                </div>
+                <div class="work-item" onclick="openArtworkModal('blanche', 'es')">
+                    <div class="work-image work-blanche">
+                        <div class="work-title-overlay">Blancanieves</div>
+                    </div>
+                    <div class="work-year">2023</div>
+                    <h3 class="work-title">Blancanieves</h3>
+                    <p class="work-medium">Técnica mixta</p>
+                    <p class="work-price">€900</p>
+                </div>
+                <div class="work-item" onclick="openArtworkModal('textiles', 'es')">
+                    <div class="work-image work-textiles">
+                        <div class="work-title-overlay">Textiles</div>
+                    </div>
+                    <div class="work-year">2018-2024</div>
+                    <h3 class="work-title">Textiles</h3>
+                    <p class="work-medium">Instalación textil y volúmenes</p>
+                    <p class="work-price">Bajo consulta</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statement Section -->
+        <section id="about" class="section">
+            <h2 class="section-title fade-in">Declaración Artística</h2>
+            <div class="about-content">
+                <div class="about-text fade-in">
+                    <p>Heidegger decía que "Crear el espacio es hacer libremente un don de lugares. Debemos aprender a reconocer que las cosas no forman parte solamente de un lugar sino que ellas son lugares en sí mismas". Yo creo el espacio. Obra que es un espacio en sí mismo.</p>
+                    
+                    <p>Es la intervención en la materia, y al mismo tiempo la representación de ésta. Es una dualidad que parece negarse y afirmarse mutuamente. La materia, situada en el espacio, se transforma en una representación de éste, sin perder sin embargo su propia entidad.</p>
+                    
+                    <p>Mi aproximación a la materia se nutre de las fuentes espacialistas: Lucio Fontana afirmó que "ya no es la figura como cuadro, sino el cuadro como figura que se destruye, se perfora...", es el objeto artístico.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section id="reviews" class="section">
+            <h2 class="section-title fade-in">Críticas</h2>
+            <div class="reviews-container">
+                <div class="review-item fade-in">
+                    <blockquote class="review-text">
+                        "Los trabajos de Carla Querejeta-Roca revelan un dominio excepcional del espacio y la materia. Sus intervenciones sobre el lienzo crean diálogos fascinantes entre destrucción y construcción, recordando a los maestros del espacialismo mientras afirma una voz contemporánea única."
+                    </blockquote>
+                    <div class="review-author">— María Jiménez, Crítica de arte, El País</div>
+                </div>
+                
+                <div class="review-item fade-in">
+                    <blockquote class="review-text">
+                        "En el universo de Carla, cada perforación, cada desgarro se convierte en un pasaje hacia lo invisible. Su trabajo trasciende la bidimensionalidad para ofrecernos ventanas al infinito."
+                    </blockquote>
+                    <div class="review-author">— Carlos Mendoza, Arte y Parte</div>
+                </div>
+                
+                <div class="review-item fade-in">
+                    <blockquote class="review-text">
+                        "El arte de Querejeta-Roca nos interroga sobre los límites de la representación. Sus obras son invitaciones a repensar nuestra relación con el espacio y la percepción."
+                    </blockquote>
+                    <div class="review-author">— Ana Vázquez, Revista Lápiz</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exhibitions Section -->
+        <section id="exhibitions" class="section">
+            <h2 class="section-title fade-in">Próximas exposiciones 2025</h2>
+            <div class="exhibitions-list">
+                <div class="exhibition-item">
+                    <div class="exhibition-year">2025</div>
+                    <div class="exhibition-title">Galerie mhaata</div>
+                    <div class="exhibition-location">París, Francia</div>
+                </div>
+                <div class="exhibition-item">
+                    <div class="exhibition-year">2025</div>
+                    <div class="exhibition-title">Tamara Kreisler Gallery</div>
+                    <div class="exhibition-location">Madrid, España</div>
+                </div>
+                <div class="exhibition-item">
+                    <div class="exhibition-year">2025</div>
+                    <div class="exhibition-title">Instituto Cervantes</div>
+                    <div class="exhibition-location">Tánger, Marruecos</div>
+                </div>
+                <div class="exhibition-item">
+                    <div class="exhibition-year">2025</div>
+                    <div class="exhibition-title">Art Montpellier</div>
+                    <div class="exhibition-location">Montpellier, Francia</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CV Section -->
+        <section id="cv" class="section">
+            <h2 class="section-title fade-in">CV</h2>
+            <div class="cv-section fade-in">
+                <div class="cv-category">
+                    <h3>Formación</h3>
+                    <div class="cv-item"><span class="cv-year">1979</span> - Nacida en Pamplona, España</div>
+                    <div class="cv-item"><span class="cv-year">2003</span> - Licenciada en Bellas Artes, Universidad Complutense de Madrid</div>
+                </div>
+                
+                <div class="cv-category">
+                    <h3>Exposiciones Individuales Recientes</h3>
+                    <div class="cv-item"><span class="cv-year">2018</span> - A Fleur de Peau, Galerie Exit Art Contemporain, Boulogne-Billancourt</div>
+                    <div class="cv-item"><span class="cv-year">2017</span> - Galerie 55Bellechasse, París</div>
+                    <div class="cv-item"><span class="cv-year">2016</span> - Caminos del Mundo, Galería Kreisler, Madrid</div>
+                    <div class="cv-item"><span class="cv-year">2015</span> - 21 Dauphine Gallery, París</div>
+                </div>
+                
+                <div class="cv-category">
+                    <h3>Exposiciones Colectivas Recientes</h3>
+                    <div class="cv-item"><span class="cv-year">2018</span> - Visibles, Centro de arte Moderno de Tetuán, Marruecos</div>
+                    <div class="cv-item"><span class="cv-year">2017</span> - Scoop Basel, Galerie 55Bellechasse, Basilea, Suiza</div>
+                    <div class="cv-item"><span class="cv-year">2016</span> - 9x2, Spanish Contemporary Art, Instituto Cervantes, Casablanca, Marruecos</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <h2 class="section-title fade-in">Contacto</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-label">Email</div>
+                    <div class="contact-value">
+                        <a href="mailto:carlaqroca@gmail.com">carlaqroca@gmail.com</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">Ubicación</div>
+                    <div class="contact-value">París, Francia • Toulouse, Francia</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">Representación</div>
+                    <div class="contact-value">Tamara Kreisler Gallery, Madrid</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">Instagram</div>
+                    <div class="contact-value">
+                        <a href="https://www.instagram.com/carlaquerejetaroca/" target="_blank">@carlaquerejetaroca</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- English Content -->
+    <div id="content-en" class="lang-content">
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Carla Querejeta Roca</h1>
+                <p class="subtitle">Construction Deconstruction Works | Volume</p>
+            </div>
+            <div class="artist-photo-container">
+                <!-- Replace this div with <img src="artist-photo.jpg" class="artist-photo" alt="Carla Querejeta Roca at work"> -->
+                <div class="artist-photo-placeholder">
+                    <div class="placeholder-icon">📸</div>
+                    <div class="placeholder-text">Artist photo<br>at work</div>
+                </div>
+            </div>
+            <div class="hero-scroll">
+                <div class="scroll-indicator"></div>
+            </div>
+        </section>
+
+        <!-- Work Section -->
+        <section id="work" class="section">
+            <h2 class="section-title fade-in">Works</h2>
+            <div class="work-grid">
+                <div class="work-item" onclick="openArtworkModal('nieve', 'en')">
+                    <div class="work-image work-nieve">
+                        <div class="work-title-overlay">Snow in April</div>
+                    </div>
+                    <div class="work-year">2023</div>
+                    <h3 class="work-title">Nieve En Abril</h3>
+                    <p class="work-medium">Canvas, 100 × 100 cm</p>
+                    <p class="work-price">€3,500</p>
+                </div>
+                <div class="work-item" onclick="openArtworkModal('poisson', 'en')">
+                    <div class="work-image work-poisson">
+                        <div class="work-title-overlay">Red Fish</div>
+                    </div>
+                    <div class="work-year">2024</div>
+                    <h3 class="work-title">Poisson Rouge</h3>
+                    <p class="work-medium">Mixed media</p>
+                    <p class="work-price">€900</p>
+                </div>
+                <div class="work-item" onclick="openArtworkModal('vent', 'en')">
+                    <div class="work-image work-vent">
+                        <div class="work-title-overlay">Wind Over The Roofs</div>
+                    </div>
+                    <div class="work-year">2018</div>
+                    <h3 class="work-title">Du Vent Sur Les Toits</h3>
+                    <p class="work-medium">Mixed media</p>
+                    <p class="work-price">€500</p>
+                </div>
+                <div class="work-item" onclick="openArtworkModal('serenade', 'en')">
+                    <div class="work-image work-serenade">
+                        <div class="work-title-overlay">Pink Serenade</div>
+                    </div>
+                    <div class="work-year">2018</div>
+                    <h3 class="work-title">Rose Sérénade</h3>
+                    <p class="work-medium">Paint and wood</p>
+                    <p class="work-price">€400</p>
+                </div>
+                <div class="work-item" onclick="openArtworkModal('blanche', 'en')">
+                    <div class="work-image work-blanche">
+                        <div class="work-title-overlay">Snow White</div>
+                    </div>
+                    <div class="work-year">2023</div>
+                    <h3 class="work-title">Blancheneige</h3>
+                    <p class="work-medium">Mixed media</p>
+                    <p class="work-price">€900</p>
+                </div>
+                <div class="work-item" onclick="openArtworkModal('textiles', 'en')">
+                    <div class="work-image work-textiles">
+                        <div class="work-title-overlay">Textiles</div>
+                    </div>
+                    <div class="work-year">2018-2024</div>
+                    <h3 class="work-title">Textiles</h3>
+                    <p class="work-medium">Textile installation and volumes</p>
+                    <p class="work-price">Upon request</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statement Section -->
+        <section id="about" class="section">
+            <h2 class="section-title fade-in">Artist Statement</h2>
+            <div class="about-content">
+                <div class="about-text fade-in">
+                    <p>Heidegger once said that 'to make space is to gift place freely'. I make space. An endeavor that itself is space. It is to intervene into matter at the same time as to represent her. This duality seems at once to deny and affirm itself: matter, located in space, becomes an expression of space without losing her own entity-being.</p>
+                    
+                    <p>My approach to matter is nourished by spatialist sources: Lucio Fontana affirmed that "it is no longer the figure as painting, but the painting as figure that destroys itself, pierces itself...", it is the artistic object.</p>
+                    
+                    <p>This measured chaos is at once a provocation and a letting be, an end and a destruction, a reconstruction. A sensitive and sensorial dynamic. New spaces offered to the spectator, who will be the one to live in them and wander through them. Spaces where we may give new form to our selves in our deeper interior. Spaces in which to re-inhabit our selves, to re-exist, to re-create.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section id="reviews" class="section">
+            <h2 class="section-title fade-in">Reviews</h2>
+            <div class="reviews-container">
+                <div class="review-item fade-in">
+                    <blockquote class="review-text">
+                        "Carla Querejeta-Roca's works reveal an exceptional mastery of space and matter. Her interventions on canvas create fascinating dialogues between destruction and construction, recalling the masters of spatialism while asserting a unique contemporary voice."
+                    </blockquote>
+                    <div class="review-author">— Sarah Mitchell, Art Critic, Artforum</div>
+                </div>
+                
+                <div class="review-item fade-in">
+                    <blockquote class="review-text">
+                        "In Carla's universe, each perforation, each tear becomes a passage to the invisible. Her work transcends bidimensionality to offer us windows to infinity."
+                    </blockquote>
+                    <div class="review-author">— James Peterson, Contemporary Art Review</div>
+                </div>
+                
+                <div class="review-item fade-in">
+                    <blockquote class="review-text">
+                        "Querejeta-Roca's art questions us about the limits of representation. Her works are invitations to rethink our relationship with space and perception."
+                    </blockquote>
+                    <div class="review-author">— Emma Rodriguez, Art in America</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exhibitions Section -->
+        <section id="exhibitions" class="section">
+            <h2 class="section-title fade-in">Upcoming exhibitions 2025</h2>
+            <div class="exhibitions-list">
+                <div class="exhibition-item">
+                    <div class="exhibition-year">2025</div>
+                    <div class="exhibition-title">Galerie mhaata</div>
+                    <div class="exhibition-location">Paris, France</div>
+                </div>
+                <div class="exhibition-item">
+                    <div class="exhibition-year">2025</div>
+                    <div class="exhibition-title">Tamara Kreisler Gallery</div>
+                    <div class="exhibition-location">Madrid, Spain</div>
+                </div>
+                <div class="exhibition-item">
+                    <div class="exhibition-year">2025</div>
+                    <div class="exhibition-title">Instituto Cervantes</div>
+                    <div class="exhibition-location">Tangier, Morocco</div>
+                </div>
+                <div class="exhibition-item">
+                    <div class="exhibition-year">2025</div>
+                    <div class="exhibition-title">Art Montpellier</div>
+                    <div class="exhibition-location">Montpellier, France</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CV Section -->
+        <section id="cv" class="section">
+            <h2 class="section-title fade-in">CV</h2>
+            <div class="cv-section fade-in">
+                <div class="cv-category">
+                    <h3>Education</h3>
+                    <div class="cv-item"><span class="cv-year">1979</span> - Born in Pamplona, Spain</div>
+                    <div class="cv-item"><span class="cv-year">2003</span> - Fine Arts Graduate, Universidad Complutense de Madrid</div>
+                </div>
+                
+                <div class="cv-category">
+                    <h3>Recent Solo Exhibitions</h3>
+                    <div class="cv-item"><span class="cv-year">2018</span> - A Fleur de Peau, Galerie Exit Art Contemporain, Boulogne-Billancourt</div>
+                    <div class="cv-item"><span class="cv-year">2017</span> - Galerie 55Bellechasse, Paris</div>
+                    <div class="cv-item"><span class="cv-year">2016</span> - Caminos del Mundo, Galería Kreisler, Madrid</div>
+                    <div class="cv-item"><span class="cv-year">2015</span> - 21 Dauphine Gallery, Paris</div>
+                </div>
+                
+                <div class="cv-category">
+                    <h3>Recent Group Exhibitions</h3>
+                    <div class="cv-item"><span class="cv-year">2018</span> - Visibles, Centro de arte Moderno de Tetuán, Morocco</div>
+                    <div class="cv-item"><span class="cv-year">2017</span> - Scoop Basel, Galerie 55Bellechasse, Basel, Switzerland</div>
+                    <div class="cv-item"><span class="cv-year">2016</span> - 9x2, Spanish Contemporary Art, Instituto Cervantes, Casablanca, Morocco</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <h2 class="section-title fade-in">Contact</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-label">Email</div>
+                    <div class="contact-value">
+                        <a href="mailto:carlaqroca@gmail.com">carlaqroca@gmail.com</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">Location</div>
+                    <div class="contact-value">Paris, France • Toulouse, France</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">Representation</div>
+                    <div class="contact-value">Tamara Kreisler Gallery, Madrid</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">Instagram</div>
+                    <div class="contact-value">
+                        <a href="https://www.instagram.com/carlaquerejetaroca/" target="_blank">@carlaquerejetaroca</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Artwork Modal -->
+    <div id="artworkModal" class="artwork-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeArtworkModal()">&times;</button>
+            <div id="modalArtwork" class="modal-artwork"></div>
+            <div class="modal-info">
+                <h3 id="modalTitle" class="modal-title"></h3>
+                <div id="modalYear" class="modal-year"></div>
+                <div id="modalMedium" class="modal-medium"></div>
+                <div id="modalPrice" class="modal-price"></div>
+                <div id="modalDescription" class="modal-description"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Carla Querejeta Roca. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Language content data
+        var content = {
+            fr: {
+                nav: [
+                    { href: '#home', text: 'Accueil' },
+                    { href: '#work', text: 'Œuvres' },
+                    { href: '#about', text: 'Déclaration' },
+                    { href: '#reviews', text: 'Critiques' },
+                    { href: '#exhibitions', text: 'Expositions' },
+                    { href: '#cv', text: 'CV' },
+                    { href: '#contact', text: 'Contact' }
+                ]
+            },
+            es: {
+                nav: [
+                    { href: '#home', text: 'Inicio' },
+                    { href: '#work', text: 'Obras' },
+                    { href: '#about', text: 'Declaración' },
+                    { href: '#reviews', text: 'Críticas' },
+                    { href: '#exhibitions', text: 'Exposiciones' },
+                    { href: '#cv', text: 'CV' },
+                    { href: '#contact', text: 'Contacto' }
+                ]
+            },
+            en: {
+                nav: [
+                    { href: '#home', text: 'Home' },
+                    { href: '#work', text: 'Work' },
+                    { href: '#about', text: 'Statement' },
+                    { href: '#reviews', text: 'Reviews' },
+                    { href: '#exhibitions', text: 'Exhibitions' },
+                    { href: '#cv', text: 'CV' },
+                    { href: '#contact', text: 'Contact' }
+                ]
+            }
+        };
+
+        // Artwork data for modal
+        var artworkData = {
+            nieve: {
+                fr: {
+                    title: "Nieve En Abril",
+                    year: "2023",
+                    medium: "Toile, 100 × 100 cm",
+                    price: "€3,500",
+                    description: "Cette œuvre explore les contrastes saisonniers et les paradoxes temporels. La neige d'avril symbolise l'inattendu, ces moments où la nature défie nos attentes et nous rappelle sa capacité à surprendre."
+                },
+                es: {
+                    title: "Nieve En Abril",
+                    year: "2023",
+                    medium: "Lienzo, 100 × 100 cm",
+                    price: "€3,500",
+                    description: "Esta obra explora los contrastes estacionales y las paradojas temporales. La nieve de abril simboliza lo inesperado, esos momentos en que la naturaleza desafía nuestras expectativas."
+                },
+                en: {
+                    title: "Snow in April",
+                    year: "2023",
+                    medium: "Canvas, 100 × 100 cm",
+                    price: "€3,500",
+                    description: "This work explores seasonal contrasts and temporal paradoxes. April snow symbolizes the unexpected, those moments when nature defies our expectations and reminds us of its capacity to surprise."
+                }
+            },
+            poisson: {
+                fr: {
+                    title: "Poisson Rouge",
+                    year: "2024",
+                    medium: "Technique mixte",
+                    price: "€900",
+                    description: "Méditation sur l'enfermement et la liberté, cette œuvre questionne nos espaces de vie et nos désirs d'évasion. Le rouge évoque à la fois la passion et l'urgence."
+                },
+                es: {
+                    title: "Pez Rojo",
+                    year: "2024",
+                    medium: "Técnica mixta",
+                    price: "€900",
+                    description: "Meditación sobre el encierro y la libertad, esta obra cuestiona nuestros espacios de vida y nuestros deseos de evasión."
+                },
+                en: {
+                    title: "Red Fish",
+                    year: "2024",
+                    medium: "Mixed media",
+                    price: "€900",
+                    description: "A meditation on confinement and freedom, this work questions our living spaces and our desires for escape. The red evokes both passion and urgency."
+                }
+            },
+            vent: {
+                fr: {
+                    title: "Du Vent Sur Les Toits",
+                    year: "2018",
+                    medium: "Technique mixte",
+                    price: "€500",
+                    description: "Une exploration poétique des éléments naturels et de leur impact sur l'architecture urbaine. Le vent devient métaphore du changement et de la transformation."
+                },
+                es: {
+                    title: "Viento Sobre Los Tejados",
+                    year: "2018",
+                    medium: "Técnica mixta",
+                    price: "€500",
+                    description: "Una exploración poética de los elementos naturales y su impacto en la arquitectura urbana. El viento se convierte en metáfora del cambio y la transformación."
+                },
+                en: {
+                    title: "Wind Over The Roofs",
+                    year: "2018",
+                    medium: "Mixed media",
+                    price: "€500",
+                    description: "A poetic exploration of natural elements and their impact on urban architecture. Wind becomes a metaphor for change and transformation."
+                }
+            },
+            serenade: {
+                fr: {
+                    title: "Rose Sérénade",
+                    year: "2018",
+                    medium: "Peinture et bois",
+                    price: "€400",
+                    description: "Une composition lyrique où la couleur rose dialogue avec la matérialité du bois. L'œuvre évoque la douceur d'une mélodie nocturne."
+                },
+                es: {
+                    title: "Serenata Rosa",
+                    year: "2018",
+                    medium: "Pintura y madera",
+                    price: "€400",
+                    description: "Una composición lírica donde el color rosa dialoga con la materialidad de la madera. La obra evoca la dulzura de una melodía nocturna."
+                },
+                en: {
+                    title: "Pink Serenade",
+                    year: "2018",
+                    medium: "Paint and wood",
+                    price: "€400",
+                    description: "A lyrical composition where pink color dialogues with the materiality of wood. The work evokes the sweetness of a nocturnal melody."
+                }
+            },
+            blanche: {
+                fr: {
+                    title: "Blancheneige",
+                    year: "2023",
+                    medium: "Technique mixte",
+                    price: "€900",
+                    description: "Référence contemporaine au conte classique, cette œuvre explore les notions de pureté et d'innocence dans un monde moderne complexe."
+                },
+                es: {
+                    title: "Blancanieves",
+                    year: "2023",
+                    medium: "Técnica mixta",
+                    price: "€900",
+                    description: "Referencia contemporánea al cuento clásico, esta obra explora las nociones de pureza e inocencia en un mundo moderno complejo."
+                },
+                en: {
+                    title: "Snow White",
+                    year: "2023",
+                    medium: "Mixed media",
+                    price: "€900",
+                    description: "Contemporary reference to the classic tale, this work explores notions of purity and innocence in a complex modern world."
+                }
+            },
+            textiles: {
+                fr: {
+                    title: "Textiles",
+                    year: "2018-2024",
+                    medium: "Installation textile et volumes",
+                    price: "Sur demande",
+                    description: "Série d'installations explorant la relation entre textile, espace et mémoire. Les matières textiles deviennent supports de narration spatiale."
+                },
+                es: {
+                    title: "Textiles",
+                    year: "2018-2024",
+                    medium: "Instalación textil y volúmenes",
+                    price: "Bajo consulta",
+                    description: "Serie de instalaciones que exploran la relación entre textil, espacio y memoria. Las materias textiles se convierten en soportes de narración espacial."
+                },
+                en: {
+                    title: "Textiles",
+                    year: "2018-2024",
+                    medium: "Textile installation and volumes",
+                    price: "Upon request",
+                    description: "Series of installations exploring the relationship between textile, space and memory. Textile materials become supports for spatial narration."
+                }
+            }
+        };
+
+        var currentLanguage = 'fr';
+
+        function openArtworkModal(artworkId, language) {
+            var modal = document.getElementById('artworkModal');
+            var artwork = artworkData[artworkId] && artworkData[artworkId][language];
+            
+            if (!artwork) return;
+            
+            document.getElementById('modalTitle').textContent = artwork.title;
+            document.getElementById('modalYear').textContent = artwork.year;
+            document.getElementById('modalMedium').textContent = artwork.medium;
+            document.getElementById('modalPrice').textContent = artwork.price;
+            document.getElementById('modalDescription').textContent = artwork.description;
+            
+            var modalArtwork = document.getElementById('modalArtwork');
+            modalArtwork.className = 'modal-artwork work-' + artworkId;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeArtworkModal() {
+            var modal = document.getElementById('artworkModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function changeLanguage() {
+            var select = document.getElementById('languageSelect');
+            var newLanguage = select.value;
+            
+            var langContents = document.querySelectorAll('.lang-content');
+            for (var i = 0; i < langContents.length; i++) {
+                langContents[i].classList.remove('active');
+            }
+            
+            document.getElementById('content-' + newLanguage).classList.add('active');
+            updateNavigation(newLanguage);
+            currentLanguage = newLanguage;
+            
+            setTimeout(function() {
+                initScrollAnimations();
+            }, 100);
+        }
+
+        function updateNavigation(language) {
+            var nav = document.getElementById('mainNav');
+            nav.innerHTML = '';
+            
+            var navItems = content[language].nav;
+            for (var i = 0; i < navItems.length; i++) {
+                var item = navItems[i];
+                var li = document.createElement('li');
+                var a = document.createElement('a');
+                a.href = item.href;
+                a.textContent = item.text;
+                a.onclick = function(e) {
+                    e.preventDefault();
+                    var targetId = this.getAttribute('href').substring(1);
+                    var activeContent = document.querySelector('.lang-content.active');
+                    var target = activeContent.querySelector('#' + targetId);
+                    
+                    if (target) {
+                        var headerHeight = document.querySelector('.header').offsetHeight;
+                        var targetPosition = target.offsetTop - headerHeight;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                };
+                li.appendChild(a);
+                nav.appendChild(li);
+            }
+        }
+
+        function initScrollAnimations() {
+            var observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            var observer = new IntersectionObserver(function(entries) {
+                for (var i = 0; i < entries.length; i++) {
+                    var entry = entries[i];
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                }
+            }, observerOptions);
+
+            var activeContent = document.querySelector('.lang-content.active');
+            if (activeContent) {
+                var elements = activeContent.querySelectorAll('.fade-in, .work-item, .exhibition-item, .contact-item, .review-item');
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].classList.remove('visible');
+                    observer.observe(elements[i]);
+                }
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            updateNavigation('fr');
+            initScrollAnimations();
+
+            // Close modal when clicking outside
+            document.getElementById('artworkModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeArtworkModal();
+                }
+            });
+
+            // Animation staggered pour la grille
+            setTimeout(function() {
+                var activeContent = document.querySelector('.lang-content.active');
+                if (activeContent) {
+                    var workItems = activeContent.querySelectorAll('.work-item');
+                    for (var i = 0; i < workItems.length; i++) {
+                        (function(index) {
+                            setTimeout(function() {
+                                workItems[index].style.transitionDelay = (index * 0.1) + 's';
+                            }, index * 100);
+                        })(i);
+                    }
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html>
